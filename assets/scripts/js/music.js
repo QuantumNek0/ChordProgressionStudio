@@ -81,7 +81,7 @@ export function createChord(chord_name) {
     current_note = (getNoteName(midi_value[0])).replace(/[0-9]/g, '');
     const root = {
         midi_value: midi_value[0],
-        audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav`
+        audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav?raw=true`
     };
     notes.push(root);
     console.log(`Pushing: ${getNoteName(midi_value[0])}`);
@@ -92,7 +92,7 @@ export function createChord(chord_name) {
     current_note = (getNoteName(midi_value[1])).replace(/[0-9]/g, '');
     const third = {
         midi_value: midi_value[1],
-        audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav`
+        audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav?raw=true`
     };
     notes.push(third);
     console.log(`Pushing: ${getNoteName(midi_value[1])}`);
@@ -103,7 +103,7 @@ export function createChord(chord_name) {
     current_note = (getNoteName(midi_value[2])).replace(/[0-9]/g, '');
     const fifth = {
         midi_value: midi_value[2],
-        audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav`
+        audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav?raw=true`
     };
     notes.push(fifth);
     console.log(`Pushing: ${getNoteName(midi_value[2])}`);
@@ -115,7 +115,7 @@ export function createChord(chord_name) {
         current_note = (getNoteName(midi_value[3])).replace(/[0-9]/g, '');
         const seventh = {
             midi_value: midi_value[3],
-            audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav`
+            audio_path: `../../../sounds/notes/oct${octave}_${current_note}.wav?raw=true`
         };
         notes.push(seventh);
         console.log(`Pushing: ${getNoteName(midi_value[3])}`);
