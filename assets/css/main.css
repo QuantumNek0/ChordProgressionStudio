@@ -1,12 +1,74 @@
 @import url('https://fonts.googleapis.com/css?family=Alatsi');
 
-.stripe {
+.screen-dim {
+    display: none;
+    background-color: black;
+    opacity: 80%;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+}
 
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+
+.stripe {
     margin-top: -20px;
-    margin-bottom: 20px;
-    height: 200px;
+    margin-bottom: 5%;
     width: 100%;
     background-color: rgb(66, 66, 66);
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+h3 {
+    text-align: center;
+}
+
+body {
+    font-family: 'Alatsi';
+}
+
+.key-selector {
+    margin: auto;
+    width: 100px;
+}
+
+.pads {
+    text-align: center;
+    margin: auto;
+    padding: 75px;
+}
+
+/* Default styles */
+#z1, #z2, #z3, #z4, #z5, #z6, #z7 {
+    display: inline-block;
+}
+
+#flavor-text {
+    color: rgb(224, 224, 224);
+    padding: 1px;
+    font-size: 20px;
 }
 
 /* Buttons */
@@ -31,10 +93,6 @@
     border-style: solid;
     cursor: pointer;
 }
-
-body {
-    font-family: 'Alatsi';
-}
   
 .dropbtn:hover, .dropbtn:focus {
     background-color: rgb(136, 136, 136);
@@ -43,50 +101,51 @@ body {
 .padbtn:hover {
     background-color: rgb(240, 240, 240);
 }
-  
-.dropdown-submenu {
-    position: relative;
-}
-  
-.dropdown-submenu .dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top: -1px;
-}
 
-.container {
-    margin-top: 5%;
-}
-
-h1 {
-    color: white;
-    text-align: center;
-    padding-top: 75px;
-    padding-bottom: 50px;
-}
-
-.key-selector {
-    text-align: center;
-    display: inline-block;
-    margin-left: 46%;
-}
-
-/* Default styles */
-#z1, #z2, #z3, #z4, #z5, #z6, #z7 {
-    display: inline-block;
-    width: 100px;
-    font-size: 16px;
-}
-
-#z1 {
-    margin-left: 17.3%;
-}
-
-/* Styles for smaller screens */
-@media (max-width: 600px) {
-    #z1, #z2, #z3, #z4, #z5, #z6, #z7 {
-        width: 75px; /* Adjust the width */
-        font-size: 12px; /* Adjust the font size */
-        margin-left: 0%; /* Adjust the margin */
+@media only screen and (max-width: 865px) {
+    .dropbtn {
+        width: 90px;
     }
+    .padbtn {
+        width: 90px;
+    }
+    .pads {
+        padding-top: 50px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+@media only screen and (max-height: 650px) {
+    .stripe {
+        margin-bottom: 0px;
+    }
+    .key-selector {
+        margin-top: 0px;
+    }
+    h1 {
+        padding: 15px;
+        font-size: 25px;
+    }
+    h3 {
+        font-size: 20px;
+    }
+    .pads {
+        padding-top: 30px;
+    }
+    .padbtn {
+        height: 100px;
+    }
+}
+
+@media only screen and (max-width: 428px) {
+    .screen-dim {
+        display: block;
+   }
+   .dropbtn {
+    display: none;
+   }
+   #info {
+    color: gray;
+   }
 }

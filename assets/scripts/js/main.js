@@ -1,4 +1,4 @@
-import { createChord, getNotationElements, NUMBER_NOTES } from './music.js';
+import { createChord, NUMBER_NOTES } from './music.js';
 import { getScaleChords } from './theory.js';
 var pad_chords = [];
 function innitBuffer() {
@@ -14,7 +14,6 @@ function innitBuffer() {
 function updateChord(pad_number, new_chord) {
     const current_chord = document.getElementById("Chord" + pad_number);
     current_chord.innerHTML = new_chord;
-    const chord_elements = getNotationElements(new_chord);
     pad_chords[pad_number - 1] = createChord(new_chord);
 }
 function updateKey(new_key) {
