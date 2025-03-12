@@ -7,12 +7,6 @@ export class Chord {
         return await this.audioContext.decodeAudioData(arrayBuffer);
     }
     async initAudio() {
-        // this.root.audio_element = new Audio(this.root.audio_path);
-        // this.third.audio_element = new Audio(this.third.audio_path);
-        // this.fifth.audio_element = new Audio(this.fifth.audio_path);
-        // if (this.seventh != undefined) {
-        //     this.seventh.audio_element = new Audio(this.seventh.audio_path);
-        // }
         this.audioContext = new AudioContext();
         this.buffers['root'] = await this.loadAudioBuffer(this.root.audio_path);
         this.buffers['third'] = await this.loadAudioBuffer(this.third.audio_path);
@@ -30,7 +24,6 @@ export class Chord {
             this.seventh = notes[3];
         }
         this.type = type;
-        this.initAudio();
     }
     playBuffer(buffer) {
         const source = this.audioContext.createBufferSource();
@@ -39,14 +32,6 @@ export class Chord {
         source.start(0);
     }
     play() {
-        // this.root.audio_element.currentTime = 0;
-        // this.third.audio_element.currentTime = 0;
-        // this.fifth.audio_element.currentTime = 0;
-        // if (this.seventh != undefined) this.seventh.audio_element.currentTime = 0;
-        // this.root.audio_element.play();
-        // this.third.audio_element.play();
-        // this.fifth.audio_element.play();
-        // if (this.seventh != undefined) this.seventh.audio_element.play();
         if (this.buffers['root']) {
             this.playBuffer(this.buffers['root']);
         }
@@ -64,19 +49,19 @@ export class Chord {
         return [this.root, this.third, this.fifth];
     }
 }
-export function createChord(chord_name) {
-    console.log("Create chord has been called!");
+export async function createChord(chord_name) {
+    // console.log("Create chord has been called!");
     const chord_elements = getNotationElements(chord_name);
     const note = chord_elements.root;
     const accidental = chord_elements.accidental;
     let octave = chord_elements.octave;
     let octave_range = getOctaveRange(octave);
-    console.log(`octave_range['end']: ${octave_range[1]}`);
+    // console.log(`octave_range['end']: ${octave_range[1]}`);
     let notes = [];
     let current_note;
     current_note = getNoteName(getMidiValue(note + accidental + octave));
     const midi_value = getThirds(note + accidental + octave, chord_elements.type, chord_elements.has_seventh);
-    console.log(`midi_value: ${midi_value}`);
+    // console.log(`midi_value: ${midi_value}`);
     // No numbers
     current_note = (getNoteName(midi_value[0])).replace(/[0-9]/g, '');
     const root = {
@@ -84,7 +69,7 @@ export function createChord(chord_name) {
         audio_path: `sounds/notes/oct${octave}_${current_note}.wav?raw=true`
     };
     notes.push(root);
-    console.log(`Pushing: ${getNoteName(midi_value[0])}`);
+    // console.log(`Pushing: ${getNoteName(midi_value[0])}`);
     if (midi_value[1] >= octave_range[1]) {
         octave++;
         octave_range = getOctaveRange(octave);
@@ -95,7 +80,7 @@ export function createChord(chord_name) {
         audio_path: `sounds/notes/oct${octave}_${current_note}.wav?raw=true`
     };
     notes.push(third);
-    console.log(`Pushing: ${getNoteName(midi_value[1])}`);
+    // console.log(`Pushing: ${getNoteName(midi_value[1])}`);
     if (midi_value[2] >= octave_range[1]) {
         octave++;
         octave_range = getOctaveRange(octave);
@@ -106,7 +91,7 @@ export function createChord(chord_name) {
         audio_path: `sounds/notes/oct${octave}_${current_note}.wav?raw=true`
     };
     notes.push(fifth);
-    console.log(`Pushing: ${getNoteName(midi_value[2])}`);
+    // console.log(`Pushing: ${getNoteName(midi_value[2])}`);
     if (chord_elements.has_seventh) {
         if (midi_value[3] >= octave_range[1]) {
             octave++;
@@ -118,21 +103,22 @@ export function createChord(chord_name) {
             audio_path: `sounds/notes/oct${octave}_${current_note}.wav?raw=true`
         };
         notes.push(seventh);
-        console.log(`Pushing: ${getNoteName(midi_value[3])}`);
+        // console.log(`Pushing: ${getNoteName(midi_value[3])}`);
     }
     const chord = new Chord(notes, chord_elements.type);
+    await chord.initAudio();
     return chord;
 }
 function getThirds(note, type, has_seventh = false) {
-    console.log(`note: ${note}`);
-    console.log(`note in flat: ${getSharpToFlat(note)}`);
+    // console.log(`note: ${note}`);
+    // console.log(`note in flat: ${getSharpToFlat(note)}`);
     let thirds = [];
     let midi_root;
     if (note.search(/#/) != -1)
         midi_root = getMidiValue(getSharpToFlat(note));
     else
         midi_root = getMidiValue(note);
-    console.log(`midi_root: ${midi_root}`);
+    // console.log(`midi_root: ${midi_root}`);
     thirds.push(midi_root);
     let midi_third;
     let midi_fifth;
