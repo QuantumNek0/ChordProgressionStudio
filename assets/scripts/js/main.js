@@ -6,7 +6,7 @@ var pad_chords = [];
 const loading_screen = document.getElementById("loading");
 const small_screen = document.getElementById("not-portrait");
 // Create a MediaQueryList object
-var media_query = window.matchMedia("(max-width: 428px)");
+var media_query = window.matchMedia("(max-width: 380px)");
 async function innitBuffer() {
     for (let i = 0; i < NUMBER_NOTES; i++) {
         let chord_element = document.getElementById("Chord" + (i + 1));

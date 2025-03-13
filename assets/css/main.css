@@ -96,7 +96,7 @@ body {
 }
 
 #flavor-text {
-    color: rgb(224, 224, 224);
+    color: rgb(210, 210, 210);
     padding: 1px;
     font-size: 20px;
 }
@@ -122,6 +122,7 @@ body {
     padding: 10px;
     font-size: 16px;
     border-style: solid;
+    border-color: rgb(210, 210, 210);
     cursor: pointer;
     touch-action: manipulation;
 }
@@ -150,6 +151,10 @@ body {
         padding-top: 50px;
         padding-right: 10px;
         padding-left: 10px;
+    }
+    h1 {
+        font-size: 30px;
+        padding: 40px;
     }
 }
 
@@ -184,9 +189,3 @@ body {
         height: 100px;
     }
 }
-
-/* @media only screen and (max-width: 428px) {
-    #not-portrait {
-        display: block;
-   }
-} */
