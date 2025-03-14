@@ -9,25 +9,42 @@ import { getScaleChords } from './theory.js';
 
 // DOM variables
 var pad_chords: Chord[] = [];
+var load_progress = 0;
 
-// overlays
-const loading_screen = document.getElementById("loading");
-const small_screen = document.getElementById("not-portrait");
+// DOM elements
+const html_loadingText = document.getElementById("load-text");
+const html_loadingOverlay = document.getElementById("loading");
+const html_flipOverlay = document.getElementById("not-portrait");
 
 // screen size query
 var media_query = window.matchMedia("(max-width: 380px)");
 
-async function updateChord(pad_number: number, new_chord: string) {
+async function updateChord(pad_number: number, new_chord: string, load_screen = true) {
 
-    showLoadScreen(true);
-    const current_chord = document.getElementById("Chord" + pad_number);
-    current_chord.innerHTML = new_chord;
+    if (load_screen) {
+        showLoadScreen(true);
+        load_progress = 0;
 
-    const chord = newChord(new_chord)
-    await chord.initAudio();
+        const current_chord = document.getElementById("Chord" + pad_number);
+        current_chord.innerHTML = new_chord;
 
-    pad_chords[pad_number - 1] = chord;
-    showLoadScreen(false);
+        updateProgress(100);
+        const chord = newChord(new_chord)
+        await chord.initAudio();
+
+        pad_chords[pad_number - 1] = chord;
+        showLoadScreen(false);
+
+    } else {
+
+        const current_chord = document.getElementById("Chord" + pad_number);
+        current_chord.innerHTML = new_chord;
+
+        const chord = newChord(new_chord)
+        await chord.initAudio();
+
+        pad_chords[pad_number - 1] = chord;
+    }
 }
 
 async function updateKey(new_key: string) {
@@ -37,11 +54,13 @@ async function updateKey(new_key: string) {
     current_key.innerHTML = new_key
 
     const key_chords = getScaleChords(new_key);
+    load_progress = 0;
 
     for (let i = 0; i < NUMBER_NOTES; i++) {
+        updateProgress(100 / NUMBER_NOTES);
 
         const chord_name = key_chords[i] + " 3";
-        await updateChord(i + 1, chord_name);
+        await updateChord(i + 1, chord_name, false);
     }
     showLoadScreen(false);
 }
@@ -52,27 +71,34 @@ function playPad(pad_number: number) {
 }
 
 function showLoadScreen(display: boolean) {
+    
     if (display) {
-        loading_screen.style.display = "block";
-        small_screen.style.display = "none"
+        html_loadingOverlay.style.display = "block";
+        html_flipOverlay.style.display = "none"
 
     } else {
-        loading_screen.style.display = "none";
+        html_loadingOverlay.style.display = "none";
 
         if (media_query.matches)
-            small_screen.style.display = "block"
+            html_flipOverlay.style.display = "block"
     }
 }
 
 function requestFlip(query: MediaQueryList) {
     if (query.matches) { // screen size matches (380px or smaller)
 
-        small_screen.style.display = "block"
+        html_flipOverlay.style.display = "block"
     } else {
-        small_screen.style.display = "none"
+        html_flipOverlay.style.display = "none"
     }
 }
 requestFlip(media_query);
+
+async function updateProgress(progress: number) {
+
+    load_progress += progress;
+    html_loadingText.innerText = `Loading sounds ${Math.round(load_progress)}%`;
+}
 
 (window as any).updateChord = updateChord;
 (window as any).updateKey = updateKey;

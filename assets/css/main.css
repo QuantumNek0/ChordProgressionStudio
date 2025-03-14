@@ -46,7 +46,11 @@
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-  }
+}
+
+.dropdown-menu {
+    min-width: 100px;
+}
 
 .dropdown-submenu {
     position: relative;
@@ -141,6 +145,9 @@ body {
 }
 
 @media only screen and (max-width: 865px) {
+    .dropdown-menu {
+        min-width: 90px;
+    }
     .dropbtn {
         width: 90px;
     }
